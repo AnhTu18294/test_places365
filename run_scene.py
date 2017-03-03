@@ -25,7 +25,7 @@ def predictions_scene(fpath_design, fpath_weights, fpath_labels, im):
 	transformer.set_raw_scale('data', 255.0)
 
 	# since we classify only one image, we change batch size from 10 to 1
-	net.blobs['data'].reshape(1,3,227,227)
+	net.blobs['data'].reshape(1,3,224,224)
 
 	# load the image in the data layer
 	net.blobs['data'].data[...] = transformer.preprocess('data', im)
