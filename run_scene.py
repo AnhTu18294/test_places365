@@ -3,6 +3,8 @@ import sys
 import caffe
 import pickle
 import time
+
+caffe.set_mode_gpu() 
 #path to index and image data files:
 fpath_index = '/video/trecvid/sin15/2016t/tshots/keylist1.txt'
 fpath_data = '/video/trecvid/sin15/2016t/jpg/'
