@@ -44,7 +44,7 @@ def predictions_scene(fpath_design, fpath_weights, fpath_labels, im, file_predic
 
 
 
-f_out1 = open(fpath_outputs + 'predictions', 'a')
+f_out1 = open(fpath_outputs + 'predictions', 'w')
 # f_out3 = open(fpath_outputs + 'dumpfile_predictions', 'w')
 
 with open(fpath_index, 'r') as f_in:
@@ -52,8 +52,9 @@ with open(fpath_index, 'r') as f_in:
 	index = 0
 	while image_index:
 		index = index + 1
+		print '\n\n\n\nImage {} in processing .....\n\n\n\n'.format(index)
 		if(index == 2):
-			print 'Image {} in processing .....'.format(index)
+			
 			time.sleep(3)
 		image_index = image_index.replace('\n', '')
 		image_file_path = fpath_data + image_index
