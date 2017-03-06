@@ -46,15 +46,18 @@ f_out1 = open(fpath_outputs + 'predictions', 'w')
 # f_out2 = open(fpath_outputs + 'dumpfile_predictions', 'w')
 
 # result = {}
-
+t1 = 0
 with open(fpath_index, 'r') as f_in:
+	t1 = time.time()
 	image_index = f_in.readline()
 	index = 0
 	while image_index:
 		index = index + 1
-		print '\n\n\n\nImage {} in processing ..... \n\n\n\n'.format(index)
-		if(index == 100000):
-			time.sleep(3)
+		# print '\n\n\n\nImage {} in processing ..... \n\n\n\n'.format(index)
+		if(index == 5):
+			print '\n\n\n\n time : {}'.format(time.time() - t1)
+			# time.sleep(3)
+			break
 		image_index = image_index.replace('\n', '')
 		image_file_path = fpath_data + image_index
 		im = caffe.io.load_image(image_file_path)

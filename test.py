@@ -46,16 +46,17 @@ def predictions_scene(fpath_design, fpath_weights, fpath_labels, im, file_predic
 
 f_out1 = open(fpath_outputs + 'predictions', 'w')
 # f_out3 = open(fpath_outputs + 'dumpfile_predictions', 'w')
-
+t1 = 0
+t2 = 0
 with open(fpath_index, 'r') as f_in:
+	t1 = time.time()
 	image_index = f_in.readline()
 	index = 0
 	while image_index:
 		index = index + 1
 		print '\n\n\n\nImage {} in processing .....\n\n\n\n'.format(index)
-		if(index == 2):
-			
-			time.sleep(3)
+		# if(index == 2):
+		# 	time.sleep(3)
 		image_index = image_index.replace('\n', '')
 		image_file_path = fpath_data + image_index
 		im = caffe.io.load_image(image_file_path)
@@ -66,6 +67,7 @@ with open(fpath_index, 'r') as f_in:
 		image_index = f_in.readline()
 f_out1.close()
 
+print 'time: {} '.format(time.time() - t1)
 
 # print result
 
