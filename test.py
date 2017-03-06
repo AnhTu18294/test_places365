@@ -52,10 +52,10 @@ with open(fpath_index, 'r') as f_in:
 		image_index = image_index.replace('\n', '')
 		image_file_path = fpath_data + image_index
 		im = caffe.io.load_image(image_file_path)
-		f_out1.write(image_index + ':\n')
 		probs = predictions_scene(net, im)
-		f_out1.write(str(probs) + '\n')
+		f_out1.write(image_index + ':\n' + str(probs) + '\n')
 		image_index = f_in.readline()
+
 f_out1.close()
 
 print 'time: {} '.format(time.time() - t1)
