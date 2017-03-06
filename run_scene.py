@@ -50,7 +50,6 @@ with open(fpath_index, 'r') as f_in:
 		image_index = image_index.replace('\n', '')
 		image_file_path = fpath_data + image_index
 		im = caffe.io.load_image(image_file_path)
-		f_out.write()
 		probs = predictions_scene(net, im)
 		f_out.write(image_index + ':\n'+ str(probs))
 		image_index = f_in.readline()
