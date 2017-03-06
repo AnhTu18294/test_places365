@@ -49,6 +49,7 @@ with open(fpath_index, 'r') as f_in:
 		index += 1
 		if((index%10) == 0):
 			print 'Image {} in processing .....'.format(index)
+			break
 		image_index = image_index.replace('\n', '')
 		image_file_path = fpath_data + image_index
 		im = caffe.io.load_image(image_file_path)
