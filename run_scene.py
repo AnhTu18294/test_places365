@@ -31,7 +31,7 @@ net = caffe.Net(fpath_design, fpath_weights, caffe.TEST)
 
 # load input and configure preprocessing
 transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
-transformer.set_mean('data', np.load('/root/caffe/python/caffe/imagenet/ilsvrc_2012_mean.npy').mean(1).mean(1))  # TODO - remove hardcoded path
+transformer.set_mean('data', np.load('/home/mrim/nguyenan/caffe/python/caffe/imagenet/ilsvrc_2012_mean.npy').mean(1).mean(1))  # TODO - remove hardcoded path
 transformer.set_transpose('data', (2,0,1))
 transformer.set_channel_swap('data', (2,1,0))
 transformer.set_raw_scale('data', 255.0)
@@ -49,7 +49,6 @@ with open(fpath_index, 'r') as f_in:
 		index += 1
 		if((index%10) == 0):
 			print 'Image {} in processing .....'.format(index)
-			break
 		image_index = image_index.replace('\n', '')
 		image_file_path = fpath_data + image_index
 		im = caffe.io.load_image(image_file_path)
