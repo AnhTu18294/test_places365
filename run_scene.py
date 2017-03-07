@@ -24,7 +24,7 @@ def predictions_scene(net, im):
 	out = net.forward()
 
 	# get all of probability accuracy for each image
-	return out["prob"].astype(float)
+	return out["prob"]
 
 # initilaize net
 net = caffe.Net(fpath_design, fpath_weights, caffe.TEST)
@@ -47,13 +47,14 @@ with open(fpath_index, 'r') as f_in:
 	index = 0
 	while image_index:
 		index += 1
-		if((index%10) == 0):
+		if((index%1000) == 0):
 			print 'Image {} in processing .....'.format(index)
 		image_index = image_index.replace('\n', '')
 		image_file_path = fpath_data + image_index
 		im = caffe.io.load_image(image_file_path)
 		probs = predictions_scene(net, im)
-		f_out.write(image_index + ':\n'+ str(probs))
+		probs.tofile(f_out, '')
+		# f_out.write(image_index + ':\n'+ str(probs))
 		image_index = f_in.readline()
 
 f_out.close()
