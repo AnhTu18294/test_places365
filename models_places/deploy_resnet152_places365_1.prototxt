@@ -9,9 +9,6 @@ layer {
 	type: "ImageData" #IMAGE_DATA
 	top: "data"
 	top: "label"
-	include {
-		phase: TEST
-	}
 	image_data_param {
 		source: "/home/mrim/nguyenan/test_places365/index1.txt"
 		mean_file: "/home/mrim/safadi/tv17/places365-master/places365CNN_mean.binaryproto"
