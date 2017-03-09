@@ -56,7 +56,7 @@ with open(fpath_index, 'r') as f_in:
 		im = caffe.io.load_image(image_file_path)
 		i = index%batch_size -1
 		net.blobs['data'].data[i,:,:,:] = transformer.preprocess('data', im)
-		if(((index%batch_size) == 0)||(index == index_size)):
+		if(((index%batch_size) == 0) or (index == index_size)):
 			print net.forward()
 		image_index = f_in.readline().replace(" 0", "").replace('\n', '')
 	# while image_index:
