@@ -14,7 +14,7 @@ fpath_data = ''
 fpath_outputs = 'outputs0/'
 
 # fetch pretrained models
-fpath_design = '../deploy_resnet152_places365.prototxt'
+fpath_design = 'models_places/deploy_resnet152_places365.prototxt'
 fpath_weights = 'models_places/resnet152_places365.caffemodel'
 fpath_labels = 'resources/labels.pkl'
 
