@@ -6,7 +6,7 @@ import time
 
 caffe.set_mode_gpu() 
 #path to index and image data files:
-fpath_index = 'l1'
+fpath_index = 'index1.txt'
 fpath_data = '/video/trecvid/sin15/2016t/jpg/'
 fpath_outputs = 'outputs0/'
 
@@ -21,10 +21,10 @@ def predictions_scene(net, im):
 	net.blobs['data'].data[...] = transformer.preprocess('data', im)
 
 	#compute
-	out = net.forward()
+	net.forward()
 
 	# get all of probability accuracy for each image
-	return out["fc365"]
+	return net.blobs["fc365"].data[0]
 
 # initilaize net
 net = caffe.Net(fpath_design, fpath_weights, caffe.TEST)
