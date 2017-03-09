@@ -34,34 +34,31 @@ def predictions_scene(net, im):
 net = caffe.Net(fpath_design, fpath_weights, caffe.TEST)
 
 # load input and configure preprocessing
-# transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
-# transformer.set_mean('data', np.load('/home/mrim/nguyenan/caffe/python/caffe/imagenet/ilsvrc_2012_mean.npy').mean(1).mean(1))  # TODO - remove hardcoded path
-# transformer.set_transpose('data', (2,0,1))
-# transformer.set_channel_swap('data', (2,1,0))
-# transformer.set_raw_scale('data', 255.0)
-in_shape = net.blobs['data'].data.shape
-print in_shape
-in_shape[0] = batch_size
+transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
+transformer.set_mean('data', np.load('/home/mrim/nguyenan/caffe/python/caffe/imagenet/ilsvrc_2012_mean.npy').mean(1).mean(1))  # TODO - remove hardcoded path
+transformer.set_transpose('data', (2,0,1))
+transformer.set_channel_swap('data', (2,1,0))
+transformer.set_raw_scale('data', 255.0)
+
 # since we classify only one image, we change batch size from 10 to 1
-net.blobs['data'].reshape(*in_shape)
-net.reshape()
+net.blobs['data'].reshape(batch_size,3,224,224)
 
-# f_out = open(fpath_outputs + 'predictions', 'w')
+f_out = open(fpath_outputs + 'predictions', 'w')
 
-# with open(fpath_index, 'r') as f_in:
-# 	t1 = time.time()
-# 	image_index = f_in.readline().replace(" 0", "").replace('\n', '')
-# 	index = 0
+with open(fpath_index, 'r') as f_in:
+	t1 = time.time()
+	image_index = f_in.readline().replace(" 0", "").replace('\n', '')
+	index = 0
 
-# 	while image_index:
-# 		index += 1
-# 		image_file_path = fpath_data + image_index
-# 		im = caffe.io.load_image(image_file_path)
-# 		i = index%batch_size -1
-# 		net.blobs['data'].data[i,:,:,:] = transformer.preprocess('data', im)
-# 		if(((index%batch_size) == 0) or (index == index_size)):
-# 			print net.forward()
-# 		image_index = f_in.readline().replace(" 0", "").replace('\n', '')
+	while image_index:
+		index += 1
+		image_file_path = fpath_data + image_index
+		im = caffe.io.load_image(image_file_path)
+		i = index%batch_size -1
+		net.blobs['data'].data[i,:,:,:] = transformer.preprocess('data', im)
+		if(((index%batch_size) == 0) or (index == index_size)):
+			print net.forward()
+		image_index = f_in.readline().replace(" 0", "").replace('\n', '')
 	# while image_index:
 	# 	index += 1
 	# 	if((index%1000) == 0):
@@ -73,7 +70,7 @@ net.reshape()
 	# 	# f_out.write(image_index + ':\n'+ str(probs))
 	# 	image_index = f_in.readline().replace(" 0", "").replace('\n', '')
 
-# f_out.close()
+f_out.close()
 
 print 'done!'
 
