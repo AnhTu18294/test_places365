@@ -24,7 +24,7 @@ def predictions_scene(net, im):
 	out = net.forward()
 
 	# get all of probability accuracy for each image
-	return out["prob"]
+	return out["fc365"]
 
 # initilaize net
 net = caffe.Net(fpath_design, fpath_weights, caffe.TEST)
