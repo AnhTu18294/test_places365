@@ -43,8 +43,7 @@ f_out = open(fpath_outputs + 'predictions', 'w')
 
 with open(fpath_index, 'r') as f_in:
 	t1 = time.time()
-	image_index = f_in.readline()
-	image_index.replace(' 0', '')
+	image_index = f_in.readline().replace(" 0", "")
 	index = 0
 	while image_index:
 		index += 1
@@ -56,8 +55,7 @@ with open(fpath_index, 'r') as f_in:
 		probs = predictions_scene(net, im)
 		probs.tofile(f_out, '')
 		# f_out.write(image_index + ':\n'+ str(probs))
-		image_index = f_in.readline()
-		image_index.replace(' 0', '')
+		image_index = f_in.readline().replace(" 0", "")
 
 f_out.close()
 
