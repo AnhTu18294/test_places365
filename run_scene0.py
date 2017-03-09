@@ -43,7 +43,7 @@ f_out = open(fpath_outputs + 'predictions', 'w')
 
 with open(fpath_index, 'r') as f_in:
 	t1 = time.time()
-	image_index = f_in.readline()
+	image_index = f_in.readline().replace(' 0', '')
 	index = 0
 	while image_index:
 		index += 1
