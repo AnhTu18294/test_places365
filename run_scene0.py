@@ -43,7 +43,7 @@ transformer.set_raw_scale('data', 255.0)
 # since we classify only one image, we change batch size from 10 to 1
 net.blobs['data'].reshape(batch_size,3,224,224)
 
-f_out = open(fpath_outputs + 'predictions', 'w')
+f_out = open(fpath_outputs + 'predictions10', 'w')
 
 with open(fpath_index, 'r') as f_in:
 	t1 = time.time()
