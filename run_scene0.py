@@ -6,14 +6,18 @@ import time
 
 caffe.set_mode_gpu() 
 #path to index and image data files:
+batch_size = 10
+index_size = 25
+
 fpath_index = 'index1.txt'
 fpath_data = ''
 fpath_outputs = 'outputs0/'
 
 # fetch pretrained models
-fpath_design = 'models_places/deploy_resnet152_places365.prototxt'
+fpath_design = '../deploy_resnet152_places365.prototxt'
 fpath_weights = 'models_places/resnet152_places365.caffemodel'
 fpath_labels = 'resources/labels.pkl'
+
 
 # predictions function
 def predictions_scene(net, im):
@@ -43,20 +47,32 @@ f_out = open(fpath_outputs + 'predictions', 'w')
 
 with open(fpath_index, 'r') as f_in:
 	t1 = time.time()
-	image_index = f_in.readline().replace(" 0", "")
+	image_index = f_in.readline().replace(" 0", "").replace('\n', '')
 	index = 0
+
 	while image_index:
 		index += 1
-		if((index%1000) == 0):
-			print 'Image {} in processing .....'.format(index)
-		image_index = image_index.replace('\n', '')
 		image_file_path = fpath_data + image_index
 		im = caffe.io.load_image(image_file_path)
-		probs = predictions_scene(net, im)
-		probs.tofile(f_out, '')
-		# f_out.write(image_index + ':\n'+ str(probs))
-		image_index = f_in.readline().replace(" 0", "")
+		i = index%batch_size -1
+		net.blobs['data'].data[i,:,:,:] = transformer.preprocess('data', im)
+		if(((index%batch_size) == 0)||(index == index_size)):
+			print net.forward()
+		image_index = f_in.readline().replace(" 0", "").replace('\n', '')
+	# while image_index:
+	# 	index += 1
+	# 	if((index%1000) == 0):
+	# 		print 'Image {} in processing .....'.format(index)
+	# 	image_file_path = fpath_data + image_index
+	# 	im = caffe.io.load_image(image_file_path
+	# 	probs = predictions_scene(net, im)
+	# 	probs.tofile(f_out, '')
+	# 	# f_out.write(image_index + ':\n'+ str(probs))
+	# 	image_index = f_in.readline().replace(" 0", "").replace('\n', '')
 
 f_out.close()
 
 print 'done!'
+
+
+
