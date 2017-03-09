@@ -57,6 +57,7 @@ with open(fpath_index, 'r') as f_in:
 		probs.tofile(f_out, '')
 		# f_out.write(image_index + ':\n'+ str(probs))
 		image_index = f_in.readline()
+		image_index.replace(' 0', '')
 
 f_out.close()
 
