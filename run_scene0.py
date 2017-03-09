@@ -7,7 +7,7 @@ import time
 caffe.set_mode_gpu() 
 #path to index and image data files:
 fpath_index = 'index1.txt'
-fpath_data = '/video/trecvid/sin15/2016t/jpg/'
+fpath_data = ''
 fpath_outputs = 'outputs0/'
 
 # fetch pretrained models
