@@ -12,7 +12,7 @@ layer {
 	image_data_param {
 		source: "/home/mrim/nguyenan/test_places365/index1.txt"
 		mean_file: "/home/mrim/safadi/tv17/places365-master/places365CNN_mean.binaryproto"
-		batch_size: 10
+		batch_size: 5
 		crop_size: 224
 		mirror: false
 		new_height: 224
