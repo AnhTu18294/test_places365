@@ -6,7 +6,7 @@ import time
 
 caffe.set_mode_gpu() 
 #path to index and image data files:
-batch_size = 10
+batch_size = 5
 index_size = 25
 
 fpath_index = 'index1.txt'
