@@ -57,7 +57,7 @@ with open(fpath_index, 'r') as f_in:
 		i = index%batch_size -1
 		net.blobs['data'].data[i,:,:,:] = transformer.preprocess('data', im)
 		if(((index%batch_size) == 0) or (index == index_size)):
-			print net.forward()
+			net.forward().tofile(f_out, '')
 		image_index = f_in.readline().replace(" 0", "").replace('\n', '')
 	# while image_index:
 	# 	index += 1
