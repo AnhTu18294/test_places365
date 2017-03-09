@@ -39,9 +39,11 @@ transformer.set_mean('data', np.load('/home/mrim/nguyenan/caffe/python/caffe/ima
 transformer.set_transpose('data', (2,0,1))
 transformer.set_channel_swap('data', (2,1,0))
 transformer.set_raw_scale('data', 255.0)
-
+in_shape = net.blobs['data'].data.shape
+in_shape[0] = batch_size
 # since we classify only one image, we change batch size from 10 to 1
-net.blobs['data'].reshape(batch_size,3,224,224)
+net.blobs['data'].reshape(*in_shape)
+net.reshape()
 
 f_out = open(fpath_outputs + 'predictions', 'w')
 
