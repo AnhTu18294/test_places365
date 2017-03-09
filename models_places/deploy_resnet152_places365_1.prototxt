@@ -1,9 +1,24 @@
 name: "ResNet-152-places365"
-input: "data"
-input_dim: 10
-input_dim: 3
-input_dim: 224
-input_dim: 224
+#input: "data"
+#input_dim: 10
+#input_dim: 3
+#input_dim: 224
+#input_dim: 224
+layer {
+	name: "data"
+	type: "ImageData" #IMAGE_DATA
+	top: "data"
+	top: "label"
+	image_data_param {
+		source: "/home/mrim/nguyenan/test_places365/index1.txt"
+		mean_file: "/home/mrim/safadi/tv17/places365-master/places365CNN_mean.binaryproto"
+		batch_size: 10
+		crop_size: 224
+		mirror: false
+		new_height: 224
+		new_width: 224
+	}
+}
 
 layer {
 	bottom: "data"
