@@ -27,7 +27,7 @@ net.blobs['data'].reshape(batch_size,dim_feature,height,width)
 fout_prob = open('outputs/prob.bin', 'w')
 
 for i in range (0, num_batchs):
-	net.forward()["prob"].tofile(fout_prop, '')
+	net.forward()["prob"].tofile(fout_prob, '')
 
 if(rest_images != 0):
 	net.blobs['data'].reshape(rest_images,dim_feature,height,width)
