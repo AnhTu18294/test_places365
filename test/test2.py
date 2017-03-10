@@ -1,5 +1,7 @@
 # input: deploy_resnet152_places365_1.prototxt (after input a data layer in the top of deploy_resnet152_places365 file). index1.txt, python script
 # output: Feature from prop layer
+# compare to the result that is taken by using extract_feat_dim3_b.cpp
+
 
 import numpy as np
 import sys
@@ -35,7 +37,6 @@ for i in range (0, num_batchs):
 
 if(rest_images != 0):
 	print rest_images
-	net.blobs['data'].reshape(rest_images,dim_feature,height,width)
-	net.forward()["prob"].tofile(fout_prob, '')
+	net.forward()["prob"][0: rest_images, :].tofile(fout_prob, '')
 
 print 'done!'
