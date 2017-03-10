@@ -35,6 +35,6 @@ if(rest_images != 0):
 	net.blobs['data'].reshape(rest_images,dim_feature,height,width)
 	net.forward()["prob"].tofile(fout_prob, '')
 	print '-----------'
-	print net.forward()["prob"]
+	print net.forward()["prob"][0: rest_images, :]
 
 print 'done!'
