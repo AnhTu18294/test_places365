@@ -12,7 +12,7 @@ height = 224
 width = 224
 dim_feature = 3
 
-# # fetch pretrained models
+# fetch pretrained models
 fpath_design = 'models_places/deploy_resnet152_places365_1.prototxt'
 fpath_weights = 'models_places/resnet152_places365.caffemodel'
 fpath_labels = 'resources/labels.pkl'
@@ -34,5 +34,7 @@ if(rest_images != 0):
 	print rest_images
 	net.blobs['data'].reshape(rest_images,dim_feature,height,width)
 	net.forward()["prob"].tofile(fout_prob, '')
+	print '-----------'
+	print net.forward()["prob"]
 
 print 'done!'
