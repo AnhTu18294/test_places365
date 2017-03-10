@@ -1,1 +1,5 @@
 /home/mrim/nguyenan/test_places365/images/1433.jpg
+/home/mrim/nguyenan/test_places365/images/mountains.jpg
+/home/mrim/nguyenan/test_places365/images/unknow.jpg
+/home/mrim/nguyenan/test_places365/images/waterfall.jpg
+/home/mrim/nguyenan/test_places365/images/coast.jpg
