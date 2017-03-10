@@ -124,7 +124,7 @@ int get_zuarg(int *pargc, char *argv[], const char *opt, size_t fdef, size_t *pf
 
   return(1);
 }
-/*--------------------------------------------------------------------------------*/
+/*-generate_feature_extraction_proto-------------------------------------------------------------------------------*/
 /*                               TOOL-FUNCTIONS                                   */
 /*--------------------------------------------------------------------------------*/
 /* counts lines in a text file */
@@ -150,9 +150,9 @@ int generate_feature_extraction_proto(const char *val_templet, const char *list_
       !(fpw = fopen(ext_proto, "wm")))    return(0);
   /* Write the new val_file with the list_file as source and the used batch_size. */
   while(!feof(fp) && (getline(&line,&n,fp) > 0)) {
-	if (strstr(line,"source:")) fprintf (fpw,"\tsource: \"%s\"\n",list_file);
-	else if (strstr(line,"batch_size:")) fprintf (fpw,"\tbatch_size: %d\n",bachSize);
-	else fprintf (fpw,"%s",line);
+  	if (strstr(line,"source:")) fprintf (fpw,"\tsource: \"%s\"\n",list_file);
+  	else if (strstr(line,"batch_size:")) fprintf (fpw,"\tbatch_size: %d\n",bachSize);
+  	else fprintf (fpw,"%s",line);
   }
 
   free(line);
@@ -200,19 +200,21 @@ int feature_extraction_pipeline(int GPU, int device_id, char* binary_proto, char
   sizeBlob = feature_blob->height() *feature_blob->width()*dimFeat*numFeat;
   if(!(vecOut = (float*) malloc(sizeBlob* sizeof(float)))) return (0);
   for (i = 0; i < numBatches; i++) { 
-    if (rest_images && (i == numBatches -1)) {
-	  numFeat = rest_images;
-	  sizeBlob = feature_blob->height() *feature_blob->width()*dimFeat*numFeat;
-	}
-    feature_extraction_net->Forward(input_vec);
-    feature_blob = feature_extraction_net->blob_by_name(blob);
+      if (rest_images && (i == numBatches -1)) {
+    	  numFeat = rest_images;
+    	  sizeBlob = feature_blob->height() *feature_blob->width()*dimFeat*numFeat;
+      }
+      
+      feature_extraction_net->Forward(input_vec);
+      feature_blob = feature_extraction_net->blob_by_name(blob);
 
-   	for (v = vecOut, n = 0; n < numFeat; n++)
-	  for (d = 0; d < dimFeat; d++)
-        for (x = 0; x < feature_blob->height(); x++)
-          for (y = 0; y < feature_blob->width(); y++, v++) *v = feature_blob->data_at(n,d,x,y);
-    if(fwrite (vecOut , sizeof(float), sizeBlob, fpOut) != sizeBlob) return (0);
+     	for (v = vecOut, n = 0; n < numFeat; n++)
+  	  for (d = 0; d < dimFeat; d++)
+          for (x = 0; x < feature_blob->height(); x++)
+            for (y = 0; y < feature_blob->width(); y++, v++) *v = feature_blob->data_at(n,d,x,y);
+      if(fwrite (vecOut , sizeof(float), sizeBlob, fpOut) != sizeBlob) return (0);
   }
+
   free(vecOut);
   fclose(fpOut);
   return 1;
@@ -268,7 +270,7 @@ int main(int argc,char* argv[])
   blob = get_targ(&argc,argv,"-blob", "fc8");
   if (!(get_iarg(&argc,argv,"-gpu",-1,&gpu))||
 	  !(get_iarg(&argc,argv,"-batch",25,&batchSize))) {
-	fprintf(stderr, "error while parsing command-line, please provide correct values for -gpu and -batch\n"); 
+	fprintf(stderr , "error while parsing command-line, please provide correct values for -gpu and -batch\n"); 
 	USAGE(1);
   }
  
