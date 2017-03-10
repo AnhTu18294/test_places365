@@ -4,34 +4,6 @@ import caffe
 import pickle
 import time
 
-caffe.set_mode_gpu() 
-
-batch_size = 3
-num_images = 23
-
-# # fetch pretrained models
-fpath_design = 'models_places/deploy_resnet152_places365_1.prototxt'
-fpath_weights = 'models_places/resnet152_places365.caffemodel'
-fpath_labels = 'resources/labels.pkl'
-
-num_batchs = num_images/batch_size
-
-# initilaize net
-net = caffe.Net(fpath_design, fpath_weights, caffe.TEST)
-
-
-print net.forward()["prob"].size
-
-print 'done!'
-
-
-
-import numpy as np
-import sys
-import caffe
-import pickle
-import time
-
 #path to index and image data files:
 fpath_index = '/home/anhtu/Desktop/places365/docker/index.txt'
 fpath_data = '/home/anhtu/Desktop/places365/docker/'
