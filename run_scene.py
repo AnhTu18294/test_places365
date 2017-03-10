@@ -7,7 +7,7 @@ import time
 caffe.set_mode_gpu() 
 
 batch_size = 3
-num_images = 25
+num_images = 23
 height = 224
 width = 224
 dim_feature = 3
@@ -27,9 +27,11 @@ net.blobs['data'].reshape(batch_size,dim_feature,height,width)
 fout_prob = open('outputs/prob.bin', 'w')
 
 for i in range (0, num_batchs):
+	print (i + 1)
 	net.forward()["prob"].tofile(fout_prob, '')
 
 if(rest_images != 0):
+	print rest_images
 	net.blobs['data'].reshape(rest_images,dim_feature,height,width)
 	net.forward()["prob"].tofile(fout_prob, '')
 

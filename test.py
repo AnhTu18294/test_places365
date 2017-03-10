@@ -7,7 +7,7 @@ import time
 caffe.set_mode_gpu() 
 
 batch_size = 3
-num_images = 25
+num_images = 23
 
 # # fetch pretrained models
 fpath_design = 'models_places/deploy_resnet152_places365_1.prototxt'
