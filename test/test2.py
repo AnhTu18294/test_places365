@@ -21,7 +21,7 @@ dim_feature = 3
 fpath_design = '../models_places/deploy_resnet152_places365.prototxt'
 fpath_weights = '../models_places/resnet152_places365.caffemodel'
 fpath_labels = '../resources/labels.pkl'
-fpath_output = 'outputs/test2_python.bin'
+fpath_output = 'output/test2_python.bin'
 num_batchs = num_images/batch_size
 rest_images = num_images - num_batchs*batch_size
 
