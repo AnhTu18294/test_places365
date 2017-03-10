@@ -21,7 +21,7 @@ dim_feature = 3
 fpath_design = 'models_places/deploy_resnet152_places365_1.prototxt'
 fpath_weights = 'models_places/resnet152_places365.caffemodel'
 fpath_labels = 'resources/labels.pkl'
-
+fpath_output = 'outputs/test2_python.bin'
 num_batchs = num_images/batch_size
 rest_images = num_images - num_batchs*batch_size
 
@@ -29,7 +29,7 @@ rest_images = num_images - num_batchs*batch_size
 net = caffe.Net(fpath_design, fpath_weights, caffe.TEST)
 net.blobs['data'].reshape(batch_size,dim_feature,height,width)
 
-fout_prob = open('outputs/test2_python.bin', 'w')
+fout_prob = open(fpath_output, 'w')
 
 for i in range (0, num_batchs):
 	print (i + 1)
