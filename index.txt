@@ -2,3 +2,4 @@ images/coast.jpg
 images/mountains.jpg
 images/unknow.jpg
 images/waterfall.jpg
+images/1433.jpg
