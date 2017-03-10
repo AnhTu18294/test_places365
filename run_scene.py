@@ -33,8 +33,6 @@ for i in range (0, num_batchs):
 if(rest_images != 0):
 	print rest_images
 	net.blobs['data'].reshape(rest_images,dim_feature,height,width)
-	net.forward()["prob"].tofile(fout_prob, '')
-	print '-----------'
-	print net.forward()["prob"][0: rest_images, :]
+	net.forward()["prob"][0: rest_images, :].tofile(fout_prob, '')
 
 print 'done!'
