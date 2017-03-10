@@ -18,9 +18,9 @@ width = 224
 dim_feature = 3
 
 # fetch pretrained models
-fpath_design = 'models_places/deploy_resnet152_places365_1.prototxt'
-fpath_weights = 'models_places/resnet152_places365.caffemodel'
-fpath_labels = 'resources/labels.pkl'
+fpath_design = '../models_places/deploy_resnet152_places365.prototxt'
+fpath_weights = '../models_places/resnet152_places365.caffemodel'
+fpath_labels = '../resources/labels.pkl'
 fpath_output = 'outputs/test2_python.bin'
 num_batchs = num_images/batch_size
 rest_images = num_images - num_batchs*batch_size
