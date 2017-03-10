@@ -10,7 +10,7 @@ fpath_design = '../models_places/deploy_resnet152_places365.prototxt'
 fpath_weights = '../models_places/resnet152_places365.caffemodel'
 fpath_labels = '../resources/labels.pkl'
 
-fpath_image = '../images/1443.jpg'
+fpath_image = '../images/1433.jpg'
 fpath_output = 'output/test1_python.bin'
 
 # initilaize net
