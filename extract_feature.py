@@ -233,19 +233,17 @@ def main():
 
 		for i in range (0, num_batchs):
 			for key in f_outs.keys():
-				dict(net.blobs)[ouput_to_blobs[key]].data.tofile(f_outs[key], '')
+				dict(net.blobs)[ouput_to_blobs[key]].data[0: rest_images, :].tofile(f_outs[key], '')
 
 		if(rest_images != 0):
 			for key in f_outs.keys():
-				dict(net.blobs)[ouput_to_blobs[key]].data.tofile(f_outs[key], '')
+				dict(net.blobs)[ouput_to_blobs[key]].data[0: rest_images, :].tofile(f_outs[key], '')
 	else:
 		print "using cpu to forward image on network"
 		net.blobs['data'].reshape(1,3,new_height, new_width)
 		for i in range(0, num_images):
 			for key in f_outs.keys():
-				print dict(net.blobs)[ouput_to_blobs[key]].data.shape
-				print dict(net.blobs)[ouput_to_blobs[key]].data[0: rest_images, :].shape
-				dict(net.blobs)[ouput_to_blobs[key]].data[0: rest_images, :].tofile(f_outs[key], '')
+				dict(net.blobs)[ouput_to_blobs[key]].tofile(f_outs[key], '')
 
 if __name__ == "__main__":
 	if len(sys.argv) == 1:
