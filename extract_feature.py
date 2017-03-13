@@ -243,7 +243,7 @@ def main():
 		net.blobs['data'].reshape(1,3,new_height, new_width)
 		for i in range(0, num_images):
 			for key in f_outs.keys():
-				dict(net.blobs)[ouput_to_blobs[key]].tofile(f_outs[key], '')
+				dict(net.blobs)[ouput_to_blobs[key]].data.tofile(f_outs[key], '')
 
 if __name__ == "__main__":
 	if len(sys.argv) == 1:

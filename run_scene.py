@@ -33,5 +33,5 @@ for i in range (0, num_batchs):
 if(rest_images != 0):
 	print rest_images
 	net.forward()["prob"][0: rest_images, :].tofile(fout_prob, '')
-
+	
 print 'done!'
