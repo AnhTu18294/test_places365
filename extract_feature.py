@@ -101,7 +101,7 @@ def refactor_then_load_network(input):
 	try:
 		f_deploy = open(input['deploy_file_name'], 'r')
 	except:
-		print "ERROR: Cannot open the file named ", deploy_file_name
+		print "ERROR: Cannot open the file named ", input['deploy_file_name']
 		sys.exit()
 
 	# open new val_net file
