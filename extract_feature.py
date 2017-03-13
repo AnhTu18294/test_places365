@@ -233,7 +233,7 @@ def main():
 
 		for i in range (0, num_batchs):
 			for key in f_outs.keys():
-				dict(net.blobs)[ouput_to_blobs[key]].tofile(f_outs[key], '')
+				dict(net.blobs)[ouput_to_blobs[key]].data.tofile(f_outs[key], '')
 
 		if(rest_images != 0):
 			for key in f_outs.keys():
