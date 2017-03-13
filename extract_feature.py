@@ -14,7 +14,7 @@ def USAGE():
 		\t-p number: crop size of image for preprocessing
 		\t-i True/False: rotate image at data layer
 		\t-m mean_file: the binary mean file for data image preprocessing
-		\t-g number (> 0): in case using a GPU, provide the gpu number
+		\t-g number (>= 0): in case using a GPU, provide the gpu number
 		\t-c caffeModel file: the caffe pretrained model for a NN
 		\t-e ext_proto file: caffe feature extraction prototype file for a NN
 		\t-b blobs Name: the list of output layer from caffe Net
