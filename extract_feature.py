@@ -225,7 +225,7 @@ def main():
 	print ouput_to_blobs
 	# extract feature 
 	if(gpu_id >= 0):
-		print "using cpu to forward image on network"
+		print "using GPU to forward image on network"
 		num_batchs = num_images/batch_size
 		rest_images = num_images - num_batchs*batch_size
 
