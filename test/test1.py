@@ -17,11 +17,11 @@ fpath_output = 'output/test1_python.bin'
 net = caffe.Net(fpath_design, fpath_weights, caffe.TEST)
 
 # load input and configure preprocessing
-transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
-transformer.set_mean('data', np.load('models_places/places365_mean.npy').mean(1).mean(1))  # TODO - remove hardcoded path
-transformer.set_transpose('data', (2,0,1))
-transformer.set_channel_swap('data', (2,1,0))
-transformer.set_raw_scale('data', 255.0)
+# transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
+# transformer.set_mean('data', np.load('models_places/places365_mean.npy').mean(1).mean(1))  # TODO - remove hardcoded path
+# transformer.set_transpose('data', (2,0,1))
+# transformer.set_channel_swap('data', (2,1,0))
+# transformer.set_raw_scale('data', 255.0)
 
 im = caffe.io.load_image(fpath_image)
 fout = open(fpath_output, 'w')
