@@ -102,7 +102,6 @@ def refactor_then_load_network():
 	new_width = input_dim[3]
 
 	n.data, n.lable = L.ImageData(type = 'ImageData', ntop = 2, source = source, mean_file = mean_file, batch_size = batch_size, crop_size = input_dim[2], mirror = False, new_height = new_height, new_width = new_width)
-	
 	data_layer =  str(n.to_proto())
 
 	# open new val_net file
@@ -123,11 +122,9 @@ def refactor_then_load_network():
 	
 	# check and set caffe mode: gpu or cpu	
 	if (gpu_id >= 0):
-		# set gpu mode
 		caffe.set_mode_gpu()
 		caffe.set_device(gpu_id)
 	else:
-		# set cpu mode
 		caffe.set_mode_cpu()
 
 	net = caffe.Net('val_net.prototxt', caffe_model, caffe.TEST)
@@ -204,8 +201,6 @@ def main():
 	except:
 		print "ERROR: Cannot create the output file named ", out
 		sys.exit()
-
-	print f_outs
 
 	# extract feature 
 	num_batchs = num_images/batch_size
