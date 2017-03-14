@@ -232,16 +232,19 @@ def main():
 		net.blobs['data'].reshape(batch_size,3,new_height, new_width)
 
 		for i in range (0, num_batchs):
+			net.forward()
 			for key in f_outs.keys():
 				dict(net.blobs)[ouput_to_blobs[key]].data.tofile(f_outs[key], '')
 
 		if(rest_images != 0):
+			net.forward()
 			for key in f_outs.keys():
 				dict(net.blobs)[ouput_to_blobs[key]].data[0: rest_images, :].tofile(f_outs[key], '')
 	else:
 		print "using cpu to forward image on network"
 		net.blobs['data'].reshape(1,3,new_height, new_width)
 		for i in range(0, num_images):
+			net.forward()
 			for key in f_outs.keys():
 				dict(net.blobs)[ouput_to_blobs[key]].data.tofile(f_outs[key], '')
 
