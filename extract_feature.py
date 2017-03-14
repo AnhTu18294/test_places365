@@ -217,7 +217,7 @@ def main():
 		net.forward()
 		for i in range(0, len(list_out)):
 			net.blobs[list_blobs_name[i]].data[0: rest_images, :].tofile(f_outs[i], '')
-
+	print 'done!'
 
 if __name__ == "__main__":
 	if len(sys.argv) == 1:
