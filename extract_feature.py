@@ -111,20 +111,23 @@ def refactor_then_load_network(input):
 		print "ERROR: Cannot open the buffer val_net file for refactoring network. Please try it again"
 		sys.exit()
 	
-	f_val.write(f_deploy.readline())
+	f_val.write('name: "val network"\n')
 	f_val.write(data_layer)
-	f_deploy.readline()
-	f_deploy.readline()
-	f_deploy.readline()
-	f_deploy.readline()
-	f_deploy.readline()
+	
 	line = f_deploy.readline()
 	while line:
-		f_val.write(line)
-		line = f_deploy.readline()
+		if('layer {' in line):
+			f_val.write(line)
+			line = f_deploy.readline()
+			while line:
+				f_val.write(line)
+				line = f_deploy.readline()
+			break
+		else:
+			line = f_deploy.readline()
 
 	f_val.close()
-
+	f_deploy.close()
 	# check and set caffe mode: gpu or cpu	
 	if (input['gpu_id'] >= 0):
 		# set gpu mode
