@@ -211,12 +211,12 @@ def main():
 	for i in range (0, num_batchs):
 		net.forward()
 		for i in range(0, len(list_out)):
-			dict(net.blobs)[list_blobs_name[i]].data.tofile(f_outs[i], '')
+			net.blobs[list_blobs_name[i]].data.tofile(f_outs[i], '')
 
 	if(rest_images != 0):
 		net.forward()
 		for i in range(0, len(list_out)):
-			dict(net.blobs)[list_blobs_name[i]].data[0: rest_images, :].tofile(f_outs[i], '')
+			net.blobs[list_blobs_name[i]].data[0: rest_images, :].tofile(f_outs[i], '')
 
 
 if __name__ == "__main__":
