@@ -101,7 +101,7 @@ def refactor_then_load_network():
 	new_height = input_dim[2]
 	new_width = input_dim[3]
 
-	n.data, n.lable = L.ImageData(type = 'ImageData', ntop = 2, source = source, mean_file = mean_file, batch_size = batch_size, crop_size = input_dim[2], mirror = False, new_height = new_height, new_width = new_width)
+	n.data, n.lable = L.ImageData(type = 'ImageData', ntop = 2, source = source, mean_file = mean_file, batch_size = batch_size, crop_size = max(new_width, new_height), mirror = False, new_height = new_height, new_width = new_width)
 	data_layer =  str(n.to_proto())
 
 	# open new val_net file
