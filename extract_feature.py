@@ -186,7 +186,7 @@ def main():
 	deploy_file_name = opts.ext_proto
 	list_blobs_name = np.array(opts.blobs.replace('[', '').replace(']', '').split(','))
 	batch_size = get_batch_size(opts.batch_size)
-	list_out = np.array(opts.out_files.replace('[', '').replace(']', '').split(','))
+	output_folder = opts.out_folder.replace(' ','')
 	
 	# check and count the number of images in source file
 	num_images = count_line(source)
@@ -249,12 +249,12 @@ def main():
 	for i in range (0, num_batchs):
 		net.forward()
 		print (i+1)*batch_size
-		for i in range(0, len(list_out)):
+		for i in range(0, len(list_output_filenames)):
 			net.blobs[list_blobs_name[i]].data.tofile(f_outs[i], '')
 
 	if(rest_images != 0):
 		net.forward()
-		for i in range(0, len(list_out)):
+		for i in range(0, len(list_output_filenames)):
 			net.blobs[list_blobs_name[i]].data[0: rest_images, :].tofile(f_outs[i], '')
 	print num_images
 	print 'done!'
