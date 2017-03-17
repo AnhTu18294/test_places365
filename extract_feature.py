@@ -215,7 +215,7 @@ def main():
 	try:
 		f_index = open(output_folder + '/index.txt', 'w')
 	except:
-		print "ERROR: Cannot create the index file that show the mapping between blob name and ouput filename", out
+		print "ERROR: Cannot create the index file that show the correspondence between blob name and ouput filename"
 		sys.exit()
 
 	f_index.write('blob name  ---> output filename \n\n\n')
