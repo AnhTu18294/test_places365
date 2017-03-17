@@ -187,14 +187,9 @@ def main():
 	list_blobs_name = np.array(opts.blobs.replace('[', '').replace(']', '').split(','))
 	batch_size = get_batch_size(opts.batch_size)
 	output_folder = opts.out_folder.replace(' ','')
-	
+
 	# check and count the number of images in source file
 	num_images = count_line(source)
-
-	# check output filename to list blobs name 
-	if(list_blobs_name.size != list_out.size):
-		print 'ERROR: list output file must have the same size with list blobs'
-		sys.exit()
 
 	net = refactor_then_load_network()
 	
