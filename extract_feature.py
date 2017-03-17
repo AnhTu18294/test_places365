@@ -154,6 +154,17 @@ def count_line(file_name):
 			res += 1
 	return res
 
+# replace some special characters to '_' character and put '.bin' at last the blob_name
+def generate_output_filename(blob_name):
+	special_characters = " ~`\/$%^&*={}[]|:>;',<?*"
+	result = []
+	for c in blob_name:
+		if c in special_characters:
+			result.append('_')
+		else:
+			result.append(c)
+	return ''.join(result)+'.bin'
+
 parser = optparse.OptionParser()
 parser.add_option('-l', '--list_images',help='file contains the images with labels.')
 parser.add_option('-m', '--mean_file', help='the binary mean file for data image preprocessing')
@@ -162,7 +173,7 @@ parser.add_option('-c', '--caffe_model', help='caffeModel file: the caffe pretra
 parser.add_option('-e', '--ext_proto', help='ext_proto file: caffe feature extraction prototype file for a NN')
 parser.add_option('-b', '--blobs', help='the list of output layer from caffe Net')
 parser.add_option('-s', '--batch_size', help='the batch size for the caffe Net')
-parser.add_option('-o', '--out_files', help='the list output file that corresponse with the list output layer')
+parser.add_option('-o', '--out_folder', help='the output folder that contains all of output files')
 
 
 def main():
@@ -192,14 +203,41 @@ def main():
 	if(is_valided_blobs_name(list_blobs_name, blobs_net) == False):
 		sys.exit()
 	
-	# check list ouput file name and try to create output file
+	# generate list ouput file name and make sure the output filename is unique	in list output filenames
+	list_output_filenames = []
+	
+	for blob_name in list_blobs_name:
+		new_filename = generate_output_filename(blob_name)
+		i = 0
+		for filename in list_output_filenames:
+			if(new_filename in filename):
+				i += 1
+		if(i != 0):
+			new_filename = new_filename + '(' + str(i) + ')'				
+		list_output_filenames.append(new_filename)
+
+	# write to index file that map the list blobs name to output file names
+	try:
+		f_index = open(output_folder + '/index.txt', 'w')
+	except:
+		print "ERROR: Cannot create the index file that show the mapping between blob name and ouput filename", out
+		sys.exit()
+
+	f_index.write('blob name  ---> output filename \n\n\n')
+	for i in range(0, len(list_blobs_name)):
+		f_index.write(list_blobs_name[i] + ' ---> ' + list_output_filenames[i] + '\n')
+		
+	f_index.close()
+
+	# check list ouput file name and try to create pointers to output file
 	f_outs = []
 	try:
-		for out in list_out:
-			f_temp = open(out, 'w')
+		for filename in list_output_filenames:
+			path_file_temp = output_folder + '/' + filename
+			f_temp = open(path_file_temp, 'w')
 			f_outs.append(f_temp)
 	except:
-		print "ERROR: Cannot create the output file named ", out
+		print "ERROR: Cannot create the output file named ", path_file_temp
 		sys.exit()
 
 	# extract feature 
