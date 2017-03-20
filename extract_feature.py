@@ -26,7 +26,7 @@ def USAGE():
 		\t-e ext_proto file: caffe feature extraction prototype file for a NN
 		\t-b blobs Name: the list of output layer from caffe Net
 		\t-s batch_size: the batch size for the caffe Net 
-		\t-o string: the output file (the decriptor name).
+		\t-o string: the output folder that contains all of output files.
 		\tNote: please add the path to the external libraries, like cuda, atlas, mkl..etc. (export LD_LIBRARY_PATH=/usr/local/cuda/lib64:/opt/intel/mkl/lib/intel64/')\n""" 
 	return 
 
@@ -129,7 +129,7 @@ def refactor_then_load_network():
 
 	net = caffe.Net('val_net.prototxt', caffe_model, caffe.TEST)
 
-	# os.remove('val_net.prototxt')
+	os.remove('val_net.prototxt')
 
 	return net
 
