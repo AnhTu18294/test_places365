@@ -164,7 +164,6 @@ def count_line(file_name):
             res += 1
     return res
 
-# replace some special characters to '_' character and put '.bin' at last the blob_name
 def generate_output_filename(list_blobs_name, output_folder, net):
     list_output_filenames = []
 
