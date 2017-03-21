@@ -3,6 +3,7 @@ import sys, getopt, os
 import optparse
 import caffe
 from caffe import layers as L
+import uuid
 
 source = None
 new_height = None
@@ -116,7 +117,8 @@ def refactor_then_load_network():
 
     # open new val_net file
     try:
-        f_val = open('val_net.prototxt', 'w')
+        val_filename = str(uuid.uuid4()) + '.prototxt'
+        f_val = open(val_filename, 'w')
     except:
         print "ERROR: Cannot open the buffer val_net file for refactoring network. Please try it again"
         sys.exit()
@@ -137,9 +139,9 @@ def refactor_then_load_network():
     else:
         caffe.set_mode_cpu()
 
-    net = caffe.Net('val_net.prototxt', caffe_model, caffe.TEST)
+    net = caffe.Net(val_filename, caffe_model, caffe.TEST)
 
-    os.remove('val_net.prototxt')
+    os.remove(val_filename)
 
     return net
 
