@@ -64,7 +64,7 @@ def get_output_folder(output_folder):
     return output_folder
 
 def get_dataset_name(dataset_name):
-    if (dataset_name is None) or (dataset_name == ''):
+    if dataset_name == '':
         print 'ERROR: The net value must be provided!'
         sys.exit()
     return dataset_name
@@ -164,14 +164,15 @@ def count_line(file_name):
             res += 1
     return res
 
-def generate_output_filename(list_blobs_name, output_folder, net):
+def generate_output_filename(list_blobs_name, output_folder, dataset_name):
     list_output_filenames = []
 
     if not os.path.isabs(output_folder):
         output_folder = os.getcwd() + '/' + output_folder
     print output_folder
 
-    output_folder = output_folder + '/' + net
+    if dataset_name is not None:
+        output_folder = output_folder + '/' + dataset_name
 
     for blob_name in list_blobs_name:
         split_name = blob_name.split('/')
