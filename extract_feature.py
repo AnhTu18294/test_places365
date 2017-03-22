@@ -1,6 +1,7 @@
 import numpy as np
 import sys, os
-os.environ['LD_LIBRARY_PATH'] = '/usr/local/cuda-8.0/lib64/'
+# os.environ['LD_LIBRARY_PATH'] = '/usr/local/cuda-8.0/lib64/'
+sys.path.append('/usr/local/cuda-8.0/lib64/')
 sys.path.append('/opt/caffe/python/')
 import optparse
 import caffe
