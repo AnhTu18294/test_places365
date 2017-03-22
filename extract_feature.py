@@ -1,6 +1,23 @@
-import numpy as np
+#!/usr/bin/env python
 import sys, os
-sys.path.append('/opt/caffe/python/')
+
+# return true if we must rerun this script with new environment value
+def check_env(variable_name, variable_value):
+    if not variable_name in os.environ:
+        os.environ[variable_name] = ':' + variable_value
+    elif not variable_value in os.environ.get(variable_name):
+        os.environ[variable_name] += ':' + variable_value
+    else:
+        return False
+    return True
+
+rerun = check_env('PYTHONPATH', '/opt/caffe/python/') or check_env('LD_LIBRARY_PATH','/usr/local/cuda-8.0/lib64/')
+
+if rerun:
+    os.execve(os.path.realpath(__file__), sys.argv, os.environ)
+
+
+import numpy as np
 import optparse
 import caffe
 from caffe import layers as L
