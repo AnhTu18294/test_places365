@@ -103,7 +103,7 @@ def refactor_then_load_network():
     other_attribute = {}
     line = f_deploy.readline()
     while line:
-        if('layer {' in line):
+        if(('layer' in line) or ('layers' in line)):
             break
         elif ('name:' in line):
             network_name = line[len('name:'): len(line)]
@@ -126,16 +126,16 @@ def refactor_then_load_network():
 
     n = caffe.NetSpec()
     if batch_size is None:
-        batch_size = input_dim[0]   
-    new_height = input_dim[2]
-    new_width = input_dim[3]
+        batch_size = input_dim[0]  
+    crop_size = max(input_dim[2], input_dim[3])
 
-    n.data, n.lable = L.ImageData(type = 'ImageData', ntop = 2, source = source, mean_file = mean_file, batch_size = batch_size, crop_size = max(new_width, new_height), mirror = False, new_height = new_height, new_width = new_width)
-    data_layer =  str(n.to_proto())
+    data_layer = 'layer { \n\tname: "data"\n\ttype: "ImageData"\n\ttop: "data"\n\ttop: "label"\n\ttransform_param {\n\t\tmirror: false\n\t\tcrop_size: '
+    data_layer += str(crop_size) + '\n\t\tmean_file: "' + mean_file + '"\n\t}\n\timage_data_param {\n\t\tsource: "' + source + '"\n\t\t' + 'batch_size: '
+    data_layer += str(batch_size) + '\n\t\tnew_height: ' + str(new_height) +'\n\t\tnew_width: ' + str(new_width) + '\n\t}\n}' 
 
     # open new val_net file
     try:
-        val_filename = str(uuid.uuid4()) + '.prototxt'
+        val_filename = '/tmp/' + str(uuid.uuid4()) + '.prototxt'
         f_val = open(val_filename, 'w')
     except:
         print "ERROR: Cannot open the buffer val_net file for refactoring network. Please try it again"
@@ -214,9 +214,10 @@ parser.add_option('-b', '--blobs', help='the list of output layer from caffe Net
 parser.add_option('-s', '--batch_size', help='the batch size for the caffe Net')
 parser.add_option('-o', '--out_folder', help='the output folder that contains all of output files')
 parser.add_option('-n', '--dataset_name', help='the name of dataset of image (ex: places365, imageNet1000, trecvid2016 ...)')
+parser.add_option('-z', '--heightxwidth', help='the new image size (256x256)', default='256x256')
 
 def main():
-    global source, mean_file, gpu_id, caffe_model, deploy_file_name, list_blobs_name, batch_size
+    global new_height, new_width, source, mean_file, gpu_id, caffe_model, deploy_file_name, list_blobs_name, batch_size
     opts, args = parser.parse_args()    
     source = opts.list_images
     mean_file = opts.mean_file
@@ -227,6 +228,8 @@ def main():
     batch_size = get_batch_size(opts.batch_size)
     output_folder = get_output_folder(opts.out_folder)
     dataset_name = get_dataset_name(opts.dataset_name)
+    new_height = int(opts.heightxwidth.split('x')[0])
+    new_width = int(opts.heightxwidth.split('x')[1])
     # check and count the number of images in source file
     num_images = count_line(source)
 
