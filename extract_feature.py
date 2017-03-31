@@ -46,7 +46,7 @@ def USAGE():
         \t-e ext_proto file: caffe feature extraction prototype file for a NN
         \t-b blobs Name: the list of output layer from caffe Net
         \t-s batch_size: the batch size for the caffe Net 
-        \t-o string: the output folder that contains all of output files.
+        \t-o string: the output folder that contains all of output files (default: ".").
         \t-n dataset_name: the name of dataset of image (ex: places365, imageNet1000, trecvid2016 ...)
         \t-z new image size: the new image size (default: 256x256)
         \tNote: please add the path to the external libraries, like cuda, atlas, mkl..etc. (export LD_LIBRARY_PATH=/usr/local/cuda/lib64:/opt/intel/mkl/lib/intel64/')\n""" 
@@ -223,7 +223,7 @@ parser.add_option('-c', '--caffe_model', help='caffeModel file: the caffe pretra
 parser.add_option('-e', '--ext_proto', help='ext_proto file: caffe feature extraction prototype file for a NN')
 parser.add_option('-b', '--blobs', help='the list of output layer from caffe Net')
 parser.add_option('-s', '--batch_size', help='the batch size for the caffe Net')
-parser.add_option('-o', '--out_folder', help='the output folder that contains all of output files')
+parser.add_option('-o', '--out_folder', help='the output folder that contains all of output files (default: ".")')
 parser.add_option('-n', '--dataset_name', help='the name of dataset of image (ex: places365, imageNet1000, trecvid2016 ...)')
 parser.add_option('-z', '--heightxwidth', help='the new image size (256x256)', default='256x256')
 
@@ -237,7 +237,7 @@ def main():
     model_folder = get_model_folder(opts.model_folder)
     caffe_model = model_folder + '/' + opts.caffe_model
     deploy_file_name = model_folder + '/' + opts.ext_proto
-    
+
     list_blobs_name = np.array(opts.blobs.replace('[', '').replace(']', '').split(','))
     batch_size = get_batch_size(opts.batch_size)
     output_folder = get_output_folder(opts.out_folder)
