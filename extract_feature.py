@@ -223,7 +223,7 @@ parser.add_option('-c', '--caffe_model', help='caffeModel file: the caffe pretra
 parser.add_option('-e', '--ext_proto', help='ext_proto file: caffe feature extraction prototype file for a NN')
 parser.add_option('-b', '--blobs', help='the list of output layer from caffe Net')
 parser.add_option('-s', '--batch_size', help='the batch size for the caffe Net')
-parser.add_option('-o', '--out_folder', help='the output folder that contains all of output files (default: ".")')
+parser.add_option('-o', '--out_folder', help='the output folder that contains all of output files (default: ".")', default ='.')
 parser.add_option('-n', '--dataset_name', help='the name of dataset of image (ex: places365, imageNet1000, trecvid2016 ...)')
 parser.add_option('-z', '--heightxwidth', help='the new image size (256x256)', default='256x256')
 
