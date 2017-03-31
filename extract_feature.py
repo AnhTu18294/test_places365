@@ -41,7 +41,7 @@ def USAGE():
         \t-l string: list file contains the test images with labels.
         \t-m mean_file: the binary mean file for data image preprocessing
         \t-g number (>= 0): in case using a GPU, provide the gpu number
-        \t-i model_folder: the folder that contains the caffe model and caffe feature extraction prototype (default: ".")
+        \t-i model_folder: the folder that contains the mean file, caffe model and caffe feature extraction prototype (default: ".")
         \t-c caffeModel file: the caffe pretrained model for a NN
         \t-e ext_proto file: caffe feature extraction prototype file for a NN
         \t-b blobs Name: the list of output layer from caffe Net
@@ -218,7 +218,7 @@ parser = optparse.OptionParser()
 parser.add_option('-l', '--list_images',help='file contains the images with labels.')
 parser.add_option('-m', '--mean_file', help='the binary mean file for data image preprocessing')
 parser.add_option('-g', '--gpu_id', help='in case using a GPU, provide the gpu number. If not, run with cpu', default=-1)
-parser.add_option('-i', '--model_folder', help='the folder that contains the caffe model and caffe feature extraction prototype (default: ".")', default ='.')
+parser.add_option('-i', '--model_folder', help='the folder that contains the mean file, caffe model and caffe feature extraction prototype (default: ".")', default ='.')
 parser.add_option('-c', '--caffe_model', help='caffeModel file: the caffe pretrained model for a NN')
 parser.add_option('-e', '--ext_proto', help='ext_proto file: caffe feature extraction prototype file for a NN')
 parser.add_option('-b', '--blobs', help='the list of output layer from caffe Net')
@@ -231,12 +231,12 @@ def main():
     global new_height, new_width, source, mean_file, gpu_id, model_folder, caffe_model, deploy_file_name, list_blobs_name, batch_size
     opts, args = parser.parse_args()    
     source = opts.list_images
-    mean_file = opts.mean_file
     gpu_id = get_gpu(opts.gpu_id)
 
     model_folder = get_model_folder(opts.model_folder)
     caffe_model = model_folder + '/' + opts.caffe_model
     deploy_file_name = model_folder + '/' + opts.ext_proto
+    mean_file = model_folder + '/' + opts.mean_file
 
     list_blobs_name = np.array(opts.blobs.replace('[', '').replace(']', '').split(','))
     batch_size = get_batch_size(opts.batch_size)
