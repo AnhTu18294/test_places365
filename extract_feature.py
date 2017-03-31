@@ -29,6 +29,7 @@ new_width = None
 batch_size = None
 crop_size = None
 mean_file = None
+model_folder = None
 caffe_model = None
 deploy_file_name = None
 list_blobs_name = None
@@ -40,12 +41,14 @@ def USAGE():
         \t-l string: list file contains the test images with labels.
         \t-m mean_file: the binary mean file for data image preprocessing
         \t-g number (>= 0): in case using a GPU, provide the gpu number
+        \t-i model_folder: the folder that contains the caffe model and caffe feature extraction prototype (default: ".")
         \t-c caffeModel file: the caffe pretrained model for a NN
         \t-e ext_proto file: caffe feature extraction prototype file for a NN
         \t-b blobs Name: the list of output layer from caffe Net
         \t-s batch_size: the batch size for the caffe Net 
         \t-o string: the output folder that contains all of output files.
         \t-n dataset_name: the name of dataset of image (ex: places365, imageNet1000, trecvid2016 ...)
+        \t-z new image size: the new image size (default: 256x256)
         \tNote: please add the path to the external libraries, like cuda, atlas, mkl..etc. (export LD_LIBRARY_PATH=/usr/local/cuda/lib64:/opt/intel/mkl/lib/intel64/')\n""" 
     return 
 
@@ -76,6 +79,13 @@ def get_batch_size(batch_size):
         sys.exit()
     else:
         return temp
+
+def get_model_folder(model_folder):
+    if (model_folder is None) or (model_folder == ''):
+        print 'ERROR: The model folder value must be provided!'
+        sys.exit()
+    return model_folder
+
 def get_output_folder(output_folder):
     if (output_folder is None) or (output_folder == ''):
         print 'ERROR: The output folder value must be provided!'
@@ -131,7 +141,7 @@ def refactor_then_load_network():
 
     data_layer = 'layer { \n\tname: "data"\n\ttype: "ImageData"\n\ttop: "data"\n\ttop: "label"\n\ttransform_param {\n\t\tmirror: false\n\t\tcrop_size: '
     data_layer += str(crop_size) + '\n\t\tmean_file: "' + mean_file + '"\n\t}\n\timage_data_param {\n\t\tsource: "' + source + '"\n\t\t' + 'batch_size: '
-    data_layer += str(batch_size) + '\n\t\tnew_height: ' + str(new_height) +'\n\t\tnew_width: ' + str(new_width) + '\n\t}\n}' 
+    data_layer += str(batch_size) + '\n\t\tnew_height: ' + str(new_height) +'\n\t\tnew_width: ' + str(new_width) + '\n\t}\n}\n' 
 
     # open new val_net file
     try:
@@ -208,6 +218,7 @@ parser = optparse.OptionParser()
 parser.add_option('-l', '--list_images',help='file contains the images with labels.')
 parser.add_option('-m', '--mean_file', help='the binary mean file for data image preprocessing')
 parser.add_option('-g', '--gpu_id', help='in case using a GPU, provide the gpu number. If not, run with cpu', default=-1)
+parser.add_option('-i', '--model_folder', help='the folder that contains the caffe model and caffe feature extraction prototype (default: ".")', default ='.')
 parser.add_option('-c', '--caffe_model', help='caffeModel file: the caffe pretrained model for a NN')
 parser.add_option('-e', '--ext_proto', help='ext_proto file: caffe feature extraction prototype file for a NN')
 parser.add_option('-b', '--blobs', help='the list of output layer from caffe Net')
@@ -217,13 +228,16 @@ parser.add_option('-n', '--dataset_name', help='the name of dataset of image (ex
 parser.add_option('-z', '--heightxwidth', help='the new image size (256x256)', default='256x256')
 
 def main():
-    global new_height, new_width, source, mean_file, gpu_id, caffe_model, deploy_file_name, list_blobs_name, batch_size
+    global new_height, new_width, source, mean_file, gpu_id, model_folder, caffe_model, deploy_file_name, list_blobs_name, batch_size
     opts, args = parser.parse_args()    
     source = opts.list_images
     mean_file = opts.mean_file
     gpu_id = get_gpu(opts.gpu_id)
-    caffe_model = opts.caffe_model
-    deploy_file_name = opts.ext_proto
+
+    model_folder = get_model_folder(opts.model_folder)
+    caffe_model = model_folder + '/' + opts.caffe_model
+    deploy_file_name = model_folder + '/' + opts.ext_proto
+    
     list_blobs_name = np.array(opts.blobs.replace('[', '').replace(']', '').split(','))
     batch_size = get_batch_size(opts.batch_size)
     output_folder = get_output_folder(opts.out_folder)
